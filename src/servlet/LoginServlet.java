@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response)
-					throws ServletException, IOException {
+			throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Login.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -34,28 +34,27 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request
-			, HttpServletResponse response)
-					throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
 		String name = request.getParameter("name");
 		String pass = request.getParameter("pass");
 
-		Login login = new Login(name,pass);
+		Login login = new Login(name, pass);
 		Loginlogic bo = new Loginlogic();
 		boolean result = bo.execute(login);
 
 		LoginDAO d = new LoginDAO();
 
-		if(result) {
+		if (result) {
 			HttpSession session = request.getSession();
-			session.setAttribute("name",name);
-			session.setAttribute("id",d.findByLogin(login).getId());
+			session.setAttribute("name", name);
+			session.setAttribute("id", d.findByLogin(login).getId());
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainplatform.jsp");
 			dispatcher.forward(request, response);
-		}else {
+		} else {
 			response.sendRedirect("/Platform/LoginServlet");
 		}
 	}
