@@ -21,9 +21,12 @@
 	</div>
 	<br>
 	<div class="login">
-		<input type="text" placeholder="username" name="user"><br>
-		<input type="password" placeholder="password" name="password"><br>
-		<input type="button" value="Login">
+		<form action="/Platform/LoginServlet" method="post">
+			<input type="text" placeholder="username" name="name">
+			<input	type="password" placeholder="password" name="pass"><br>
+			<input type="button" value="Login">
+		</form>
+
 	</div>
 
 </body>
