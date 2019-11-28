@@ -5,8 +5,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashMap;
 
+import bean.Account;
 import common.Attr;
 import common.EnvInfo;
 
@@ -32,8 +32,8 @@ public class LoginDAO {
 	//--------------------
 	//ID,パスワードで検索して名前とアドレスをヒットさせる（データベース側で作らなきゃダメよ）
 	//--------------------
-	public HashMap<String, String> findByLogin(String LoginId, String LoginPass) {
-		HashMap<String, String> returnMap = null;
+	public Account findByLogin(String LoginId, String LoginPass) {
+		Account returnAccount = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(this.dbPath + "?useUnicode=true&characterEncoding=utf8", this.dbUserName, this.dbPass);
@@ -47,12 +47,11 @@ public class LoginDAO {
 				String name = rs.getString("NAME");
 				String mail = rs.getString("MAIL");
 				
-				returnMap = new HashMap<String, String>();
-				returnMap.put(name,mail);
+				returnAccount = new Account(name, LoginId, LoginPass, mail);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return returnMap;
+		return returnAccount;
 	}
 }
